@@ -1,18 +1,23 @@
-<!DOCTYPE html> 
-
-<html lang="en"> 
-
-  <body> 
-    <div class="mermaid"> 
-  graph LR 
-      A --- B 
-      B-->C[fa:fa-ban forbidden] 
-      B-->D(fa:fa-spinner); 
-    </div> 
-
-    <script type="module"> 
-      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs'; 
-    </script> 
-
-  </body> 
-</html> 
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose'});</script>
+</head>
+<body>
+<div id="tester" style="width:600px;height:250px;"></div>
+<script>
+    const drawDiagram = async function () {
+    element = document.createElement('div');
+  const graphDefinition = 'graph TB\na-->b';
+  const { svg, bindFunctions } = await mermaid.render('graphDiv', graphDefinition);
+  element.innerHTML = svg;
+  // This can also be written as `bindFunctions?.(element);` using the `?` shorthand.
+  if (bindFunctions) {
+    bindFunctions(element);
+  }
+  document.body.appendChild(element);
+}
+    drawDiagram();
+</script>
+</body>
+</html>
