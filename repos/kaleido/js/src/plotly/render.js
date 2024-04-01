@@ -116,6 +116,16 @@ function render (info, mapboxAccessToken, topojsonURL) {
     return new Promise((resolve) => {resolve(done())})
   }
 
+  let mermaidDiagram = " \
+    graph LR \
+    A --- B \
+    B-->C[fa:fa-ban forbidden] \
+    B-->D(fa:fa-spinner) ";
+
+        const divElement = document.createElement("div"); 
+        divElement.innerHTML = mermaidDiagram;
+        document.body.appendChild(divElement); 
+
   let promise
 
   if (semver.gte(Plotly.version, '1.30.0')) {
