@@ -40,8 +40,10 @@ namespace kaleido {
         PlotlyScope::PlotlyScope() : topojsonUrl(), mapboxToken() {
             // Add MathJax config
             // scriptTags.emplace_back("window.PlotlyConfig = {MathJaxConfig: 'local'}");
+            
+            scriptTags.emplace_back("mermaid.initialize({ startOnLoad: true, securityLevel: 'loose'});");
 
-            // Process plotlyjs
+            Process plotlyjs
             if (HasCommandLineSwitch("plotlyjs")) {
                 std::string plotlyjsArg = GetCommandLineSwitch("plotlyjs");
 

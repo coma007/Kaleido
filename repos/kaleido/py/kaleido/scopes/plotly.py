@@ -112,6 +112,11 @@ class PlotlyScope(BaseScope):
             If not specified, will default to the `scope.default_scale` property
         :return: image bytes
         """
+
+        
+        self._plotlyjs = "https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.min.js"
+        self.plotlyjs = "https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.min.js"
+        
         # TODO: validate args
         from plotly.graph_objects import Figure
         if isinstance(figure, Figure):
