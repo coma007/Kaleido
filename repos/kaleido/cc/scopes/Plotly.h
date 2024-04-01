@@ -63,6 +63,19 @@ namespace kaleido {
                 scriptTags.emplace_back("https://cdn.plot.ly/plotly-latest.min.js");
             }
 
+            std::string mermaidDiagram = R"(
+                graph LR
+                A --- B
+                B-->C[fa:fa-ban forbidden]
+                B-->D(fa:fa-spinner);
+            )";
+            std::string scriptString = " \
+                    const divElement = document.createElement("div"); \
+                    divElement.innerHTML = " + mermaidDiagram + "; \
+                    document.body.appendChild(divElement); \
+            ";
+            scriptTags.emplace_back(scriptString);
+
             // MathJax
             if (HasCommandLineSwitch("mathjax")) {
                 std::string mathjaxArg = GetCommandLineSwitch("mathjax");

@@ -18,7 +18,8 @@ class PlotlyScope(BaseScope):
     def __init__(self, plotlyjs=None, mathjax=None, topojson=None, mapbox_access_token=None, **kwargs):
         # TODO: validate args
         # Save scope flags as internal properties
-        self._plotlyjs = plotlyjs
+        # self._plotlyjs = plotlyjs
+        self._plotlyjs = "https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.min.js"
         self._topojson = topojson
         self._mapbox_access_token = mapbox_access_token
 
@@ -75,7 +76,13 @@ class PlotlyScope(BaseScope):
         import plotly.io as pio
         return pio.to_json(val, validate=False, remove_uids=False)
 
-    def transform(self, figure, format=None, width=None, height=None, scale=None):
+    def transform(self, figure, format=None, width=None, height=None, scale=None, 
+                  mermaid_data="<pre class='mermaid'> \
+                    graph LR \
+                    A --- B \
+                    B-->C[fa:fa-ban forbidden] \
+                    B -->D(fa:fa-spinner); \
+                                </pre>"): 
         """
         Convert a Plotly figure into a static image
 

@@ -99,7 +99,7 @@ Kaleido::Kaleido(
 Kaleido::~Kaleido() {
 
     // Delete tmp file
-    std::remove(tmpFileName.c_str());
+    // std::remove(tmpFileName.c_str());
 
     // Note that we shut down the browser last, because it owns objects such as
     // the web contents which can no longer be accessed after the browser is gone.
@@ -570,7 +570,8 @@ void OnHeadlessBrowserStarted(headless::HeadlessBrowser* browser) {
     htmlStringStream << "</head><body style=\"{margin: 0; padding: 0;}\"><img id=\"kaleido-image\"><img></body></html>";
 
     // Write html to temp file
-    std::string tmpFileName = std::tmpnam(nullptr) + std::string(".html");
+    // std::string tmpFileName = std::tmpnam(nullptr) + std::string(".html");
+    std::string tmpFileName = std::string("/home/milica/repos/Kaleido/tmp.html");
     std::ofstream htmlFile;
     htmlFile.open(tmpFileName, std::ios::out);
     htmlFile << htmlStringStream.str();
@@ -597,7 +598,7 @@ void OnHeadlessBrowserStarted(headless::HeadlessBrowser* browser) {
 }
 
 int main(int argc, const char** argv) {
-#if !defined(OS_WIN)
+#if !defined(OS)
     // This function must be the first thing we call to make sure child processes
     // such as the renderer are started properly. The headless library starts
     // child processes by forking and exec'ing the main application.
