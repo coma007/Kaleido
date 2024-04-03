@@ -114,8 +114,8 @@ class PlotlyScope(BaseScope):
         """
 
         
-        self._plotlyjs = "https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.min.js"
-        self.plotlyjs = "https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.min.js"
+        # self._plotlyjs = "https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.min.js"
+        # self.plotlyjs = "https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.min.js"
         
         # TODO: validate args
         from plotly.graph_objects import Figure

@@ -271,6 +271,7 @@ void Kaleido::OnExportComplete(
     } else {
         // JSON parse result to get format
         std::string responseString = result->GetResult()->GetValue()->GetString();
+        
         base::Optional<base::Value> responseJson = base::JSONReader::Read(responseString);
         base::DictionaryValue* responseDict;
         responseJson.value().GetAsDictionary(&responseDict);
@@ -358,6 +359,7 @@ void Kaleido::OnExportComplete(
             }
         } else {
             // Write results json string
+            // std::cout << result->GetResult()->GetValue()->GetString().c_str() << std::endl;
             std::cout << result->GetResult()->GetValue()->GetString().c_str() << std::endl;
             Reload();
             return;
@@ -560,7 +562,10 @@ void OnHeadlessBrowserStarted(headless::HeadlessBrowser* browser) {
         if (tagUrl.is_valid()) {
             // Value is a url, use a src of script tag
             htmlStringStream << "<script type=\"text/javascript\" src=\"" << tagValue << "\"></script>";
-        } else {
+        } else if  (tagValue.find("import") != std::string::npos) {
+            htmlStringStream << "<script type=\"module\">" << tagValue << "</script>\n";
+        }
+        else {
             // Value is not a url, use a inline JavaScript code
             htmlStringStream << "<script>" << tagValue << "</script>\n";
         }

@@ -39,11 +39,15 @@ namespace kaleido {
 
         PlotlyScope::PlotlyScope() : topojsonUrl(), mapboxToken() {
             // Add MathJax config
-            // scriptTags.emplace_back("window.PlotlyConfig = {MathJaxConfig: 'local'}");
+            scriptTags.emplace_back("window.PlotlyConfig = {MathJaxConfig: 'local'}");
+            // scriptTags.emplace_back("https://cdn.jsdelivr.net/npm/mermaid@9.1.0/dist/mermaid.min.js");
+            // scriptTags.emplace_back("https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js");
             
-            scriptTags.emplace_back("mermaid.initialize({ startOnLoad: true, securityLevel: 'loose'});");
-
-            Process plotlyjs
+            scriptTags.emplace_back("import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';  window.mermaid = mermaid;");
+            // scriptTags.emplace_back("mermaid.initialize( { startOnLoad: false, securityLevel: 'loose'} );");
+            // scriptTags.emplace_back("");
+            
+            // Process plotlyjs
             if (HasCommandLineSwitch("plotlyjs")) {
                 std::string plotlyjsArg = GetCommandLineSwitch("plotlyjs");
 
@@ -65,50 +69,50 @@ namespace kaleido {
                 scriptTags.emplace_back("https://cdn.plot.ly/plotly-latest.min.js");
             }
 
-            std::string mermaidDiagram = R"(
-                graph LR
-                A --- B
-                B-->C[fa:fa-ban forbidden]
-                B-->D(fa:fa-spinner);
-            )";
-            std::string scriptString = " \
-                    const divElement = document.createElement("div"); \
-                    divElement.innerHTML = " + mermaidDiagram + "; \
-                    document.body.appendChild(divElement); \
-            ";
-            scriptTags.emplace_back(scriptString);
+            // std::string mermaidDiagram = R"(
+            //     graph LR
+            //     A --- B
+            //     B-->C[fa:fa-ban forbidden]
+            //     B-->D(fa:fa-spinner);
+            // )";
+            // std::string scriptString = " \
+            //         const divElement = document.createElement("div"); \
+            //         divElement.innerHTML = " + mermaidDiagram + "; \
+            //         document.body.appendChild(divElement); \
+            // ";
+            // scriptTags.emplace_back(scriptString);
 
             // MathJax
-            // if (HasCommandLineSwitch("mathjax")) {
-            //     std::string mathjaxArg = GetCommandLineSwitch("mathjax");
+            if (HasCommandLineSwitch("mathjax")) {
+                std::string mathjaxArg = GetCommandLineSwitch("mathjax");
 
-            //     GURL mathjaxUrl(mathjaxArg);
-            //     if (mathjaxUrl.is_valid()) {
-            //         std::stringstream mathjaxStringStream;
-            //         mathjaxStringStream << mathjaxArg << "?config=TeX-AMS-MML_SVG";
-            //         scriptTags.push_back(mathjaxStringStream.str());
-            //     } else {
-            //         errorMessage = base::StringPrintf("--mathjax argument is not a valid URL: %s", mathjaxArg.c_str());
-            //         return;
-            //     }
-            // }
+                GURL mathjaxUrl(mathjaxArg);
+                if (mathjaxUrl.is_valid()) {
+                    std::stringstream mathjaxStringStream;
+                    mathjaxStringStream << mathjaxArg << "?config=TeX-AMS-MML_SVG";
+                    scriptTags.push_back(mathjaxStringStream.str());
+                } else {
+                    errorMessage = base::StringPrintf("--mathjax argument is not a valid URL: %s", mathjaxArg.c_str());
+                    return;
+                }
+            }
 
             // Topojson
-            // if (HasCommandLineSwitch("topojson")) {
-            //     std::string topojsonArg = GetCommandLineSwitch("topojson");
-            //     if (GURL(topojsonArg).is_valid()) {
-            //         topojsonUrl = topojsonArg;
-            //     } else {
-            //         errorMessage = base::StringPrintf("--topojson argument is not a valid URL: %s",
-            //                                           topojsonArg.c_str());
-            //         return;
-            //     }
-            // }
+            if (HasCommandLineSwitch("topojson")) {
+                std::string topojsonArg = GetCommandLineSwitch("topojson");
+                if (GURL(topojsonArg).is_valid()) {
+                    topojsonUrl = topojsonArg;
+                } else {
+                    errorMessage = base::StringPrintf("--topojson argument is not a valid URL: %s",
+                                                      topojsonArg.c_str());
+                    return;
+                }
+            }
 
             // Process mapbox-token
-            // if (HasCommandLineSwitch("mapbox-access-token")) {
-            //     mapboxToken = GetCommandLineSwitch("mapbox-access-token");
-            // }
+            if (HasCommandLineSwitch("mapbox-access-token")) {
+                mapboxToken = GetCommandLineSwitch("mapbox-access-token");
+            }
         }
 
         PlotlyScope::~PlotlyScope() {}
@@ -123,18 +127,18 @@ namespace kaleido {
             std::vector<std::unique_ptr<::headless::runtime::CallArgument>> args;
 
             // Add mapbox token from command line
-            // args.push_back(
-            //         headless::runtime::CallArgument::Builder()
-            //                 .SetValue(std::make_unique<base::Value>(base::StringPiece(mapboxToken)))
-            //                 .Build()
-            // );
+            args.push_back(
+                    headless::runtime::CallArgument::Builder()
+                            .SetValue(std::make_unique<base::Value>(base::StringPiece(mapboxToken)))
+                            .Build()
+            );
 
-            // // Add topojson url from command-line
-            // args.push_back(
-            //         headless::runtime::CallArgument::Builder()
-            //                 .SetValue(std::make_unique<base::Value>(base::StringPiece(topojsonUrl)))
-            //                 .Build()
-            // );
+            // Add topojson url from command-line
+            args.push_back(
+                    headless::runtime::CallArgument::Builder()
+                            .SetValue(std::make_unique<base::Value>(base::StringPiece(topojsonUrl)))
+                            .Build()
+            );
             return args;
         }
     }

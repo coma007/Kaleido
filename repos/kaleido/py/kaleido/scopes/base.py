@@ -23,7 +23,8 @@ class BaseScope(object):
         "--disable-gpu",
         "--allow-file-access-from-files",
         "--disable-breakpad",
-        "--disable-dev-shm-usage",
+        # "--disable-dev-shm-usage",
+        "--remote-debugging-port=9222"
     ) + (
         # Add "--single-process" when running on AWS Lambda. Flag is described
         # as for debugging only by the chromium project, but it's the only way to get

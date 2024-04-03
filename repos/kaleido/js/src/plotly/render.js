@@ -116,17 +116,30 @@ function render (info, mapboxAccessToken, topojsonURL) {
     return new Promise((resolve) => {resolve(done())})
   }
 
-  let mermaidDiagram = " \
-    graph LR \
-    A --- B \
-    B-->C[fa:fa-ban forbidden] \
-    B-->D(fa:fa-spinner) ";
+  // let mermaidDiagram = " \
+  //   graph LR \
+  //   A --- B \
+  //   B-->C[fa:fa-ban forbidden] \
+  //   B-->D(fa:fa-spinner) ";
 
-        const divElement = document.createElement("div"); 
-        divElement.innerHTML = mermaidDiagram;
-        document.body.appendChild(divElement); 
+  //       const divElement = document.createElement("div"); 
+  //       divElement.innerHTML = mermaidDiagram;
+  //       document.body.appendChild(divElement); 
 
   let promise
+
+
+
+  const graphDefinition = 'graph TB\na-->b';
+  
+  // promise = Promise.resolve().then(() => {return {svg: "Aaaaa"}; })
+  // .catch((err) => {
+  //   console.log(JSON.stringify(err));
+  //   setTimeout(() => {
+  //     console.log("Delayed for 1 second.");
+  //   }, 120000);
+  // }
+  // );
 
   if (semver.gte(Plotly.version, '1.30.0')) {
     promise = Plotly
@@ -166,13 +179,26 @@ function render (info, mapboxAccessToken, topojsonURL) {
     errorMsg = `plotly.js version: ${Plotly.version}`
     return new Promise((resolve) => {resolve(done())})
   }
-
+  
   const img = document.getElementById("kaleido-image")
   const style = document.getElementById("head-style")
 
-  let exportPromise = promise.then((imgData) => {
-    result = imgData
-    return done()
+  async function x() {
+    // return new Promise((resolve, reject) => {
+      // setTimeout(async () => {
+        let  svg  = await mermaid.render("graph", graphDefinition);
+        // res = await mermaid.detectType(graphDefinition);
+        // res = {svg: "aaa"};
+        // resolve(res);
+      // }, 0);  
+      return svg;
+  }
+    // )}
+    ;
+
+  let exportPromise = x().then((imgData) => {
+    result = imgData;
+    return done();
   })
 
   if (PRINT_TO_PDF) {
@@ -198,7 +224,10 @@ function render (info, mapboxAccessToken, topojsonURL) {
   return exportPromise
       .catch((err) => {
         errorCode = 525
+        // errorCode = 0
         errorMsg = err.message
+        // errorMsg = result
+        // errorMsg = null;
         result = null;
         return done()
       })

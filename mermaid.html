@@ -1,23 +1,8 @@
 <html>
-<head>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <script>mermaid.initialize({ startOnLoad: true, securityLevel: 'loose'});</script>
-</head>
+  <head><meta charset="UTF-8"><style id="head-style"></style><script>window.PlotlyConfig = {MathJaxConfig: 'local'}</script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.min.js"></script><script>mermaid.initialize( { startOnLoad: true, securityLevel: 'loose'} ); window.mermaid = mermaid;</script>
+    <script type="text/javascript" src="file:///home/milica/repos/Kaleido/venv/lib/python3.10/site-packages/kaleido/executable/etc/mathjax/MathJax.js?config=TeX-AMS-MML_SVG"></script></head>
 <body>
-<div id="tester" style="width:600px;height:250px;"></div>
-<script>
-    const drawDiagram = async function () {
-    element = document.createElement('div');
-  const graphDefinition = 'graph TB\na-->b';
-  const { svg, bindFunctions } = await mermaid.render('graphDiv', graphDefinition);
-  element.innerHTML = svg;
-  // This can also be written as `bindFunctions?.(element);` using the `?` shorthand.
-  if (bindFunctions) {
-    bindFunctions(element);
-  }
-  document.body.appendChild(element);
-}
-    drawDiagram();
-</script>
+
 </body>
 </html>
