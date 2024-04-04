@@ -1,8 +1,13 @@
 /* global Plotly:false */
 
 const semver = require('semver')
+const hasOwn = require('object.hasown')
 const cst = require('./constants')
 const parse = require('./parse')
+
+if (!Object.hasOwn) {
+	hasOwn.shim();
+}
 
 /**
  * @param {object} info : info object
@@ -191,7 +196,7 @@ function render (info, mapboxAccessToken, topojsonURL) {
         // res = {svg: "aaa"};
         // resolve(res);
       // }, 0);  
-      return svg;
+      return svg.svg;
   }
     // )}
     ;

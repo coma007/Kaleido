@@ -43,7 +43,7 @@ namespace kaleido {
             // scriptTags.emplace_back("https://cdn.jsdelivr.net/npm/mermaid@9.1.0/dist/mermaid.min.js");
             // scriptTags.emplace_back("https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js");
             
-            scriptTags.emplace_back("import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';  window.mermaid = mermaid;");
+            scriptTags.emplace_back("import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs'; mermaid.initialize( { startOnLoad: false, securityLevel: 'loose'} ); window.mermaid = mermaid;");
             // scriptTags.emplace_back("mermaid.initialize( { startOnLoad: false, securityLevel: 'loose'} );");
             // scriptTags.emplace_back("");
             
